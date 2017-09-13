@@ -86,4 +86,3 @@ while True: #continue until keypress
     slider_text_l.draw()
     slider_text_r.draw()
     win.flip()   #redraw the buffer
-
