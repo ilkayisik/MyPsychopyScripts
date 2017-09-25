@@ -1,4 +1,4 @@
-'''Test the trigger via the parallel port'''
+'''Test the trigger via the parallel port and keyboard press'''
 
 from psychopy import visual, parallel, core, logging, event
 
