@@ -1,45 +1,35 @@
-'''Test the trigger via the parallel port and keyboard press'''
+'''Wait the trigger using parallel port input or keyboard press.
+Use the response box from Cornelius to emulate signal'''
 
-from psychopy import visual, parallel, core, logging, event
+from psychopy import visual, parallel, core, event
+from psychopy.parallel._inpout32 import PParallelInpOut32
 
-win = visual.Window(size=(800,600),
-                    allowGUI=True,
-                    color='grey')
+port = PParallelInpOut32()
+pin, expected_trigger = 13, 0
 
-parallel.setPortAddress(address=0xCFE9)
+# Prepare the window and the stimuli
+win = visual.Window(size=(800,600), allowGUI=True, color='grey')
+text = visual.TextStim(win=win, text='waiting for scanner...')
 
-text = visual.TextStim(win=win, #height=2, wrapWidth=50,
-                       text='waiting for scanner...',
-                       )
-
-globalClock = core.Clock()
-# begin the loop
+# Begin the loop
 start_trigger = True
+global_clock = core.Clock()
 while start_trigger:
     text.draw()
     win.flip()
-# test the trigger with the parallel  port
-    if parallel.readPin(13) == 1:
-        # start_trigger = False
-        text.text = 'I got the trigger'
-        text.draw()
-        win.flip()
+    if port.readPin(pin) == expected_trigger:
+        start_trigger = False
 
-        for keys in event.getKeys():
-
-                if keys[0] in ['escape', 'q']:
-                    win.close()
-                    core.quit()
-
-#test the triger with keyboard press
     for keys in event.getKeys():
-
         if keys in ['5']:
             start_trigger = False
-
         elif keys[0] in ['escape', 'q']:
             win.close()
             core.quit()
 
-globalClock.reset()
-#win.flip()  # blank the screen on first sync pulse received
+global_clock.reset()  # required for precise timing
+
+# For testing purposes
+text.text = 'I got the trigger'
+text.draw()
+win.flip()
