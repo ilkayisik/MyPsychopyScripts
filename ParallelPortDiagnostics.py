@@ -6,12 +6,11 @@ from psychopy.parallel._inpout32 import PParallelInpOut32
 
 win = visual.Window(size=(800,600), allowGUI=True, color='grey')
 instruction = visual.TextStim(win=win, pos=(0, -0.8), height=0.05,
-    text='- Use keyboard buttons 2-9 to change output pins.\n- Press q to quit.')
+text='- Use keyboard buttons 2-9 to change output pins.\n- Press q to quit.')
 instruction.setAutoDraw(True)
 text_1 = visual.TextStim(win=win, height=0.1, font='Monospace')
 text_2 = visual.TextStim(win=win, pos=(0, -0.2), height=0.1)
 port = PParallelInpOut32()
-
 
 def ReadPins():
     """Read selected pins from parallel port."""
@@ -48,4 +47,4 @@ while loop_switch:
         elif keys[0] in ['8']:
             port.setPin(8, (port.readPin(8) + 1) % 2)
         elif keys[0] in ['9']:
-            port.setPin(9,(port.readPin(9) + 1) % 2)
+            port.setPin(9, (port.readPin(9) + 1) % 2)

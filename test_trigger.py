@@ -1,18 +1,17 @@
 '''Wait the trigger using parallel port input or keyboard press.
-
 Use the response box from Cornelius to emulate signal.
 '''
 
 from psychopy import visual, parallel, core, event
 
 # Does the computer have a parallel port (True or False)
-parallel_port = False
+parallel_port = True
 
 if parallel_port:  # this solution is for windows machines
     from psychopy.parallel._inpout32 import PParallelInpOut32
     port = PParallelInpOut32()
     # Parallel port related parameters
-    pin = 13
+    pin = 13 #scanner=10
     expected_trigger = 0  # can be 0 or 1
 
 # Prepare the window and the stimuli
